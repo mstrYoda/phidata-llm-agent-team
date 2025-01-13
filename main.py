@@ -1,5 +1,4 @@
 from phi.agent import Agent, AgentMemory
-from phi.model.ollama import Ollama
 from phi.model.google import Gemini
 from phi.model.groq import Groq
 from phi.tools.duckduckgo import DuckDuckGo
@@ -13,9 +12,6 @@ from phi.memory.db.sqlite import SqliteMemoryDb
 from phi.memory.summarizer import MemorySummarizer
 from phi.memory.classifier import MemoryClassifier
 from phi.storage.agent.sqlite import SqlAgentStorage
-
-
-from tools import bs4
 
 def send_request(addr: str) -> str:
     """Sends http get request to the given address and returns the response
@@ -86,7 +82,7 @@ research_agent = Agent(
     instructions=[
         "Search for the most relevant information on the web and return the results.",
         "If the information is not found, return that you could not found the information."],
-    tools=[],
+    tools=[DuckDuckGo()],
         memory = AgentMemory(
         db=search_memory, 
         create_user_memories=True, create_session_summary=True, 
